@@ -110,9 +110,13 @@ class Carga_EstablecimientoController extends Controller
     	$archivo = $request->file('archivo');
 		$nombre_original= $archivo->getClientOriginalName(); //uniqid() . 
 		$extension=$archivo->getClientOriginalExtension();
+		if ($extension != "xlsx" && $extension != "xls" && $extension != "csv") {
+			return back()->with('fail', 'Error al subir el archivo, fortmato no valido [Xlsx, xls, csv]');
+		}
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
-		$ruta  =  storage_path('archivos') ."\\". $nombre_original;
-
+		return $nombre_original;
+		$ruta  = storage_path('archivos') ."\\". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
+		return $ruta;
 		if($r1){
 
        	    //$ct=0;//'public/P1.xlsx'
