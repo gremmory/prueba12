@@ -115,7 +115,6 @@ class Carga_EstablecimientoController extends Controller
 		}
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
 		$ruta  = storage_path('archivos') ."\\". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
-		return $ruta;
 		if($r1){
 
        	    //$ct=0;//'public/P1.xlsx'
