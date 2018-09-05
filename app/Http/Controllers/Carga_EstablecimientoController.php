@@ -114,12 +114,12 @@ class Carga_EstablecimientoController extends Controller
 			return back()->with('fail', 'Error al subir el archivo, fortmato no valido [Xlsx, xls, csv]');
 		}
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
-		$ruta  = storage_path('archivos') ."\\". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
+		$ruta  = storage_path('archivos') ."/". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
 		if($r1){
 
        	    //$ct=0;//'public/P1.xlsx'
        	    //Excel::load($path, function($reader) {})->get();
-       	    return $ruta;
+       	    //return $ruta;
        	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
 		        //$hoja->each(function($fila) { //    05-02-1950-40
        	    if(!empty($data) && $data->count()){
