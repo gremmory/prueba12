@@ -132,7 +132,7 @@ class Carga_EstablecimientoController extends Controller
        	    		# code...
        	    		$buscar_establecimiento = Establecimientos::where("cod_establecimiento", $fila->cod_establecimiento)->first();
 			        if($fila->cod_establecimiento){
-	       	    		if(count($buscar_establecimiento) == 0){
+	       	    		if($buscar_establecimiento == null){
 	       	    			$municipios = Municipios::where("NOM_MUPIO", $fila->municipio)->first();
 		       	    		$departamentos = Departamentos::where("Desc_Deptos", $fila->departamento)->first();
 		       	    		$niveles = Niveles::where("desc_nivel", $fila->nivel)->first();
