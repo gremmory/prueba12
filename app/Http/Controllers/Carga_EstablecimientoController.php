@@ -119,6 +119,7 @@ class Carga_EstablecimientoController extends Controller
 
        	    //$ct=0;//'public/P1.xlsx'
        	    //Excel::load($path, function($reader) {})->get();
+       	    return $ruta;
        	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
 		        //$hoja->each(function($fila) { //    05-02-1950-40
        	    if(!empty($data) && $data->count()){
