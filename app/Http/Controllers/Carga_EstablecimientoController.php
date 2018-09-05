@@ -136,7 +136,7 @@ class Carga_EstablecimientoController extends Controller
 	       	    			$municipios = Municipios::where("NOM_MUPIO", $fila->municipio)->first();
 		       	    		$departamentos = Departamentos::where("Desc_Deptos", $fila->departamento)->first();
 		       	    		$niveles = Niveles::where("desc_nivel", $fila->nivel)->first();
-	       	    			if(count($municipios) != 0 and count($departamentos) != 0){ // && $ax == 0
+	       	    			if($municipios and $departamentos){ // && $ax == 0
 	       	    				//insertar datos
 	       	    				$query = new Establecimientos;
 	       	    				$query->cod_establecimiento = (string)$fila->cod_establecimiento;
@@ -146,7 +146,7 @@ class Carga_EstablecimientoController extends Controller
 
 						        //verificar Nivel
 						        //$query->cod_nivel = $fila->cod_nivel;
-						        $query->cod_nivel = (count($niveles) != 0)? $niveles->cod_nivel : null;
+						        $query->cod_nivel = ($niveles)? $niveles->cod_nivel : null;
 						        $query->DIRECCION = $fila->direccion;
 						        $query->TELEFONO = $fila->telefono;
 						        $query->SECTOR = $fila->sector;
