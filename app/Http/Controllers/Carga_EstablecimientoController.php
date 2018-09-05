@@ -55,11 +55,11 @@ class Carga_EstablecimientoController extends Controller
 
 
 			        if($fila->cod_establecimiento){
-	       	    		if(count($buscar_establecimiento) != 0 && count($fases) != 0 && count($tipo_equipos) != 0){//existe establecimiento
+	       	    		if($buscar_establecimiento && $fases && $tipo_equipos){//existe establecimiento
 	       	    			$detalle_equipo = Detalle_Equipos::where("cod_establecimiento", $fila->cod_establecimiento)
 													->where("tipo_equipo", $tipo_equipos->tipo_equipo)
 													->where("cod_equipo", $fila->codigo_equipo)->first();
-	       	    			if(count($detalle_equipo) == 0){
+	       	    			if($detalle_equipo == null){
 	       	    				$marcas = Marcas::where("Desc_Marca", $fila->marca)->first();
        	    				
 	       	    				$query = new Detalle_Equipos;
@@ -69,7 +69,7 @@ class Carga_EstablecimientoController extends Controller
 	       	    				$query->tipo_equipo = $tipo_equipos->tipo_equipo;
 
 	       	    				$query->desc_equipo = $fila->desc_equipo;
-	       	    				$query->id_marca = (count($marcas) != 0)? $marcas->Id_Marca : null;
+	       	    				$query->id_marca = ($marcas)? $marcas->Id_Marca : null;
 	       	    				$query->series = $fila->series;
 	       	    				$query->cantidad =$fila->cantidad;
 	       	    				$query->Observaciones = $fila->observaciones;
