@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Niveles extends Model
 {
-	protected $table='Niveles';
+	protected $table='niveles';
     public $incrementing  = false;
     protected $primaryKey = "cod_nivel";
 

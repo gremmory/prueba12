@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Errores_de_pegados extends Model
 {
-	protected $table='Errores_de_pegado';
+	protected $table='esrrores_de_pegado';
 
     //protected $primaryKey = "id_jornada";
     public $incrementing  = false;

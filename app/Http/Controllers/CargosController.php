@@ -40,13 +40,14 @@ class CargosController extends Controller
     	$cargos= new annos;
     	$cargos->Descripcion_Cargo = $request->get('Descripcion_Cargo');
     	$cargos->save();
-    	return Redirect::to('nomodel/Cargos');
+    	return Redirect::to('nomodel/cargos');
     }
 
     public function Insetar (Request $request){
         $validatedData = $request->validate([
             'Descripcion_Cargo' => 'required|unique:cargos,Descripcion_Cargo|max:50',
         ]);
+        /*
         $existencia = DB::table('cargos')
             ->select('Descripcion_Cargo')
             ->where('Descripcion_Cargo', '=', $request->Descripcion_Cargo)
@@ -60,6 +61,7 @@ class CargosController extends Controller
                 ->withInput()
                 ;
         }
+        */
         $cargos= new Cargos;
         $cargos->Descripcion_Cargo = $request->Descripcion_Cargo;
         $cargos->save();
