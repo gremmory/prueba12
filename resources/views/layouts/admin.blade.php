@@ -175,6 +175,9 @@
               </ul>
             </li>
 
+            <li class="treeview">
+              <li><a href="{{URL::action('GenerarPDFController@vista')}}"><i class="fa fa-university"></i> Generar PDF </a></li>
+            </li>
 
 
 

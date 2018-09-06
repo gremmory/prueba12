@@ -113,6 +113,17 @@ Route::post('/carga/establecimiento/store',  'Carga_EstablecimientoController@es
 
 Route::get('/carga/dispositivos', 'Carga_EstablecimientoController@index2');
 Route::post('/carga/dispositivos/store',  'Carga_EstablecimientoController@dispositivoss');
+
+
+
+
+// para generar PDF
+Route::get('generate-pdf','PruebaPDFController@generatePDF');
+
+Route::get('/pdf/generarpdf/vista','GenerarPDFController@vista');
+Route::post('/pdf/generarpdf/crearvista',  'GenerarPDFController@crearvista');
+
+
 /*
 Route::get('/', function () {
     return view('carga.carga_establecimiento');
