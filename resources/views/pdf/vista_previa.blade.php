@@ -11,7 +11,7 @@
 </div>
 @endif
 
-{!! Form::open(array('url'=> '/pdf/generarpdf/crearvista',  'method'=>'POST', 'autocomplete'=>'off')) !!}
+{!! Form::open(array('url'=> '/pdf/generarpdf/crearvista',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data')) !!}
 {{ Form::token() }}
 
 <p>&nbsp;</p>
@@ -24,6 +24,13 @@
 <p style="text-align: justify; padding-right: 30px; padding-left: 30px;"><span style="font-family: 'Calibri';">En la ciudad de Guatemala, siendo las <input type="text" name="hora_letra" value=" {{old('hora_letra')}} " size="5" required > horas con <input type="text" name="min_letra" value=" {{old('min_letra')}} " size="10" required> minutos (<input type="text" name="hora_min" value=" {{old('hora_min')}} " size="4" required>) del d&iacute;a tres (03) de septiembre (09) de dos mil diez y ocho (2018), reunidos en las instalaciones de la Direcci&oacute;n General de Gesti&oacute;n de Calidad Educativa -DIGECADE- del Ministerio de Educaci&oacute;n, ubicada en la sexta (6&ordf;) calle uno gui&oacute;n ochenta y siete (1-87) de la zona diez (10), edificio dos (2), tercer nivel, ala norte, las siguientes personas: M.A. Ana Mar&iacute;a Hern&aacute;ndez Ayala, Directora de DIGECADE; <input type="text" name="direc_dep" value=" {{old('direc_dep')}} " size="20" required> Director(a) Departamental de Guatemala Norte; Licenciado Hugo Ronaldo Reyes Hern&aacute;ndez, Subdirector de Innovaci&oacute;n educativa de la DIGECADE. <strong><u>PRIMERO</u></strong>: Se suscribe la presente Acta de <strong>ENTREGA-RECEPCI&Oacute;N</strong>, para hacer constar la entrega a la Departamental Guatemala Sur, de 10 Laboratorios conformados por: <strong>256 Computadoras port&aacute;tiles (NETBOOK EDUCATIVA) marca LENOVO, 16 Computadores port&aacute;tiles (Laptop para docentes) Marca HP, modelo PROBOOK 440 G5, 16 Servidores (servidor de contenido) Marca HP, modelo PRODESK 400 G3 DM, y 16 Routers (enrutador inal&aacute;mbrico) marca LINKSYS, modelo WRT 3200 ACM, haciendo un total de 304 equipos.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></span></p>
 <p style="text-align: justify; padding-right: 30px; padding-left: 30px;"><span style="font-family: 'Calibri';"><strong><u>SEGUNDO:</u></strong> Los n&uacute;meros de serie que ser&aacute;n entregados se describen a continuaci&oacute;n:</span></p>
 <p style="text-align: justify; padding-right: 30px; padding-left: 30px;">&nbsp;</p>
+
+<div class="form-group col-xs-12"  >
+	<label>Agregar Archivo de Excel </label>
+	<input name="archivo" id="archivo" type="file"   class="archivo form-control"  required/><br /><br />
+</div>
+
+
 <p style="text-align: justify; padding-right: 30px; padding-left: 30px;"><span style="font-family: 'Calibri';"><strong>256 Computadoras port&aacute;tiles (NETBOOK EDUCATIVA):</strong></span></p>
 
 <table style="width: 100%; border-collapse: collapse;" border="0">
