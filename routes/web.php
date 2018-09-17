@@ -111,6 +111,8 @@ Route::get('/carga/establecimiento', 'Carga_EstablecimientoController@index');
 Route::post('/carga/establecimiento/store',  'Carga_EstablecimientoController@establecimientos');
 
 
+
+
 Route::get('/carga/dispositivos', 'Carga_EstablecimientoController@index2');
 Route::post('/carga/dispositivos/store',  'Carga_EstablecimientoController@dispositivoss');
 
@@ -122,6 +124,14 @@ Route::get('generate-pdf','PruebaPDFController@generatePDF');
 
 Route::get('/pdf/generarpdf/vista','GenerarPDFController@vista');
 Route::post('/pdf/generarpdf/crearvista',  'GenerarPDFController@crearvista');
+Route::get('/pdf/generarpdf/depto/{id}', 'GenerarPDFController@getFases_Depto');
+
+Route::get('/pdf/generarpdf/edu/{id}', 'GenerarPDFController@getEducativa');
+
+Route::get('/pdf/generarpdf/doc/{id}', 'GenerarPDFController@getDocente');
+Route::get('/pdf/generarpdf/ser/{id}', 'GenerarPDFController@getServidor');
+Route::get('/pdf/generarpdf/rou/{id}', 'GenerarPDFController@getEnrutador');
+Route::get('/pdf/generarpdf/all/{id}/{dpt}', 'GenerarPDFController@getAll');
 
 
 /*

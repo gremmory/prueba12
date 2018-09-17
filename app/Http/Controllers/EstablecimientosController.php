@@ -24,6 +24,7 @@ class EstablecimientosController extends Controller
     		$query=trim($request->get('searchText'));
     		//$consulta=DB::table('establecimientos')
             $consulta=Establecimientos::where('ESTABLECIMIENTO', 'LIKE', $query . '%')
+            ->orWhere('cod_establecimiento', 'LIKE', $query . '%')
     		->orderBy('ESTABLECIMIENTO', 'desc')
             ->paginate(10)
     		;

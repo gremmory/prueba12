@@ -72,4 +72,8 @@ class Establecimientos extends Model
             return (\App\Niveles::find($id))->desc_nivel;
         }
     }
+
+    public function detalle_equipo(){
+        return $this->hasMany('App\Detalle_Equipos', 'cod_establecimiento');
+    }
 }

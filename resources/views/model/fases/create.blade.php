@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label for="Id_Proveedor">Proveedor</label>
                 <select class="form-control" name="Id_Proveedor">
-                    <option value=""></option>
+                    <option value="{{old('Id_Proveedor')}}"></option>
                 @if ($proveedores != null)
                 @foreach($proveedores as $item)
                     <option value="{{$item->id_Proveedor}}">{{$item->Nombre_Pro}}</option>

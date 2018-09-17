@@ -25,5 +25,17 @@ class Departamentos extends Model
 
     public function municipios(){
         return $this->hasMany('App\Municipios', 'cod_Depto');
+    }   
+
+
+    public function establecimientos(){
+        return $this->hasMany('App\Establecimientos', 'cod_depto');
     }
+
+/*
+    public function municipios()
+    {
+        return $this->hasMany('App\Municipios');
+    }
+    */
 }

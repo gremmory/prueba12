@@ -36,8 +36,11 @@
 		</div> 
 		@endif
 		<div class="loader"></div>
+		<div class="alert alert-success" id="success" hidden></div> 
+		<div class="alert alert-danger" id="fail" hidden></div> 
+		<div class="alert alert-warning" id="medium" hidden></div> 
 
-		{!! Form::open(array('url'=> '/carga/dispositivos/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data')) !!}
+		{!! Form::open(array('url'=> '/carga/dispositivos/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data', 'id'=>'casasola2')) !!}
 		{{ Form::token() }}
 			<div class="box-body">
 				<div class="form-group col-xs-12"  >
@@ -45,7 +48,7 @@
 					<input name="archivo" id="archivo" type="file"   class="archivo form-control"  required/><br /><br />
 				</div>
 				<div class="box-footer">
-					<button type="submit" class="btn btn-primary">Cargar Datos</button>
+					<button type="submit" class="btn btn-primary" id="enlaceajax2">Cargar Datos</button>
 				</div>
 			</div>
 		{!! Form::close() !!}  

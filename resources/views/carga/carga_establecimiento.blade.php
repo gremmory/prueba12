@@ -15,7 +15,6 @@
 
 <div class="col-md-12">
 	<div class="box box-primary">
-	<div class="box-header">
 		<h3 class="box-title">Cargar Datos de Establecimientos</h3>
 	</div><!-- /.box-header -->
 
@@ -35,9 +34,15 @@
 			{{ session('medium') }}
 		</div> 
 		@endif
+
+		<div class="alert alert-success" id="success" hidden></div> 
+		<div class="alert alert-danger" id="fail" hidden></div> 
+		<div class="alert alert-warning" id="medium" hidden></div> 
+
+
 		<div class="loader"></div>
 
-		{!! Form::open(array('url'=> '/carga/establecimiento/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data')) !!}
+		{!! Form::open(array('url'=> '/carga/establecimiento/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data', 'id'=>'casasola')) !!}
 		{{ Form::token() }}
 			<div class="box-body">
 				<div class="form-group col-xs-12"  >
@@ -45,7 +50,7 @@
 					<input name="archivo" id="archivo" type="file"   class="archivo form-control"  required/><br /><br />
 				</div>
 				<div class="box-footer">
-					<button type="submit" class="btn btn-primary">Cargar Datos</button>
+					<button type="submit" class="btn btn-primary" id="enlaceajax">Cargar Datos</button>
 				</div>
 			</div>
 		{!! Form::close() !!}  

@@ -29,7 +29,7 @@ class MunicipiosController extends Controller
 
             $municipios = municipios::where('NOM_MUPIO', 'LIKE', $query . '%')
             ->orderBy('NOM_MUPIO', 'desc')
-            ->paginate(10)
+            ->paginate(25)
             //->get()
             ;
     		return view('model.municipios.index', ["municipios"=>$municipios, "searchText"=>$query]);

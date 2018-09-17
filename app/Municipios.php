@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Departamentos;
+//use App\Establecimientos;
 class Municipios extends Model
 {
     protected $table='municipios';
@@ -32,6 +33,10 @@ class Municipios extends Model
 
     public static function municipios($id){
         return municipios::where('COD_DEPTO', '=', $id)->get()->toArray();
+    }
+
+    public function establecimientos(){
+        return $this->hasMany('App\Establecimientos', 'cod_mupio');
     }
 
 }
