@@ -244,27 +244,7 @@ class GenerarPDFController extends Controller
             'direc_dep' => 'required',
             'cod_depto2' => 'required',
             'num_lab' => 'required',
-            //'cant_edu' => 'required',
-            //'marca_edu' => 'required',
-            //'model_edu' => 'required',
-            //'cant_doce' => 'required',
-            //'marca_doce' => 'required',
-            //'model_doce' => 'required',
-            //'cant_servi' => 'required',
-            //'marca_servi' => 'required',
-            //'model_servi' => 'required',
-            //'cant_rou' => 'required',
-            //'marca_rou' => 'required',
-            //'model_rou' => 'required',
-            //'total_equi' => 'required',
-            //'cant_edu2'  => 'required',
-                //'t_edu' => 'required',
-            //'cant_doc2' => 'required',
-                //'t_doc' => 'required',
-            //'cant_ser2' => 'required',
-                //'t_ser' => 'required',
-            //'cant_rou2' => 'required',
-                //'t_rou' => 'required',
+
             'tercero_par' => 'required',
             'cuarto_par' => 'required',
             'quinto_valor' => 'required',
@@ -299,21 +279,7 @@ class GenerarPDFController extends Controller
 
         //$t_edu = '';
         $total = count($edu);
-        /*
-        for($i = 0; $i < count($edu); $i++){
-            $nuevafila= "<tr><td>" . $edu[$i]->series . "</td>";
-            $i++;
-            if($i < count($edu)){
-                $nuevafila = $nuevafila . "<td>" . $edu[$i]->series . "</td>";
-            }
-            $i++;
-            if($i < count($edu)){
-                $nuevafila = $nuevafila . "<td>" . $edu[$i]->series . "</td>";
-            }
-            $nuevafila = $nuevafila . "</tr>";// . $('#t_edu').append(nuevafila);
-            $t_edu = $t_edu . $nuevafila;
-        }
-        */
+
         $cant_edu = $cant_edu2 = count($edu);
         $marca_edu;
         $model_edu;
@@ -324,21 +290,7 @@ class GenerarPDFController extends Controller
 /* ---------------------------------------------*/
         $t_doc = "";
         $total = $total + count($doc);
-        /*
-        for($i = 0; $i < count($doc); $i++){
-            $nuevafila= "<tr><td>" . $doc[$i]->series . "</td>";
-            $i++;
-            if($i < count($doc)){
-                $nuevafila = $nuevafila . "<td>" . $doc[$i]->series . "</td>";
-            }
-            $i++;
-            if($i < count($doc)){
-                $nuevafila = $nuevafila . "<td>" . $doc[$i]->series . "</td>";
-            }
-            $nuevafila = $nuevafila . "</tr>";// . $('#t_doc').append(nuevafila);
-            $t_doc = $t_doc . $nuevafila;
-        }
-        */
+
         $cant_doc = $cant_doc2 = count($doc);
         $marca_doc;
         $model_doc;
@@ -349,21 +301,6 @@ class GenerarPDFController extends Controller
 /* ---------------------------------------------*/
         $t_ser = "";
         $total = $total + count($ser);
-        /*
-        for($i = 0; $i < count($ser); $i++){
-            $nuevafila= "<tr><td>" . $ser[$i]->series . "</td>";
-            $i++;
-            if($i < count($ser)){
-                $nuevafila = $nuevafila . "<td>" . $ser[$i]->series . "</td>";
-            }
-            $i++;
-            if($i < count($ser)){
-                $nuevafila = $nuevafila . "<td>" . $ser[$i]->series . "</td>";
-            }
-            $nuevafila = $nuevafila . "</tr>";// . $('#t_ser').append(nuevafila);
-            $t_ser = $t_ser . $nuevafila;
-        }
-        */
         $cant_ser = $cant_ser2 = count($ser);
         $marca_ser;
         $model_ser;
@@ -374,21 +311,6 @@ class GenerarPDFController extends Controller
         /* ---------------------------------------------*/
         $t_rou = "";
         $total = $total + count($rou);
-        /*
-        for($i = 0; $i < count($rou); $i++){
-            $nuevafila= "<tr><td>" . $rou[$i]->series . "</td>";
-            $i++;
-            if($i < count($rou)){
-                $nuevafila = $nuevafila . "<td>" . $rou[$i]->series . "</td>";
-            }
-            $i++;
-            if($i < count($rou)){
-                $nuevafila = $nuevafila . "<td>" . $rou[$i]->series . "</td>";
-            }
-            $nuevafila = $nuevafila . "</tr>";// . $('#t_ser').append(nuevafila);
-            $t_rou = $t_rou . $nuevafila;
-        }
-        */
         $cant_rou = $cant_rou2 = count($rou);
         $marca_rou;
         $model_rou;
@@ -453,3 +375,21 @@ class GenerarPDFController extends Controller
     }
 
 }
+
+
+
+        /*
+        for($i = 0; $i < count($edu); $i++){
+            $nuevafila= "<tr><td>" . $edu[$i]->series . "</td>";
+            $i++;
+            if($i < count($edu)){
+                $nuevafila = $nuevafila . "<td>" . $edu[$i]->series . "</td>";
+            }
+            $i++;
+            if($i < count($edu)){
+                $nuevafila = $nuevafila . "<td>" . $edu[$i]->series . "</td>";
+            }
+            $nuevafila = $nuevafila . "</tr>";// . $('#t_edu').append(nuevafila);
+            $t_edu = $t_edu . $nuevafila;
+        }
+        */
