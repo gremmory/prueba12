@@ -130,8 +130,6 @@
 <p style="text-align: justify; padding-right: 30px; padding-left: 30px;"><strong>
 	{{$cant_rou2}}  
 		Routers (enrutador inal&aacute;mbrico):</strong></p>
-<table style="width: 100%; border-collapse: collapse;" border="0">
-
 
 <table style="width: 100%; border-collapse: collapse; text-align: center;" border="0" name="t_rou" id="t_rou">
 <tbody>
