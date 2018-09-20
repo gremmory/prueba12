@@ -8,7 +8,7 @@ use App\Establecimientos;
 use App\Niveles;
 use App\Fases;
 use App\Marcas;
-use App\dispositivos;
+use App\Dispositivos;
 use App\Http\Requests\Detalle_EquiposFormRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
