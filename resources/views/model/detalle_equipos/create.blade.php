@@ -26,7 +26,7 @@
                 <select class="form-control" name="cod_establecimiento">
                 @if ($establecimientos != null)
                 @foreach($establecimientos as $item)
-                    <option value="{{$item->cod_establecimiento}}">{{$item->ESTABLECIMIENTO}}</option>
+                    <option value="{{$item->cod_establecimiento}}">{{$item->cod_establecimiento}} --- {{$item->ESTABLECIMIENTO}}</option>
                 @endforeach
                 @endif
                 </select>

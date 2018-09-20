@@ -87,11 +87,11 @@
             </div>
             <div class="form-group">
                 <label for="fecha_nac">Fecha de Nacimiento</label>
-                <input type="date" name="fecha_nac" class="form-control" value="{{date('Y-m-d', strtotime(old('fecha_nac')))}}" placeholder="Y-m-d">
+                <input type="date" name="fecha_nac" class="form-control" value="{{old('fecha_nac')}}" placeholder="Y-m-d">
             </div>
             <div class="form-group">
                 <label for="fecha_contrato">Fecha de Contrato</label>
-                <input type="date" name="fecha_contrato" class="form-control" value="{{date('Y-m-d', strtotime(old('fecha_contrato')))}}" placeholder="Y-m-d">
+                <input type="date" name="fecha_contrato" class="form-control" value="{{old('fecha_contrato')}}" placeholder="Y-m-d">
             </div>
             <div class="form-group">
                 <label for="sueldo_inicial">Sueldo inicial</label>
@@ -99,7 +99,7 @@
             </div> 
             <div class="form-group">
                 <label for="fecha_ingreso">Fecha de Ingreso</label>
-                <input type="date" name="fecha_ingreso" class="form-control" value="{{date('Y-m-d', strtotime(old('fecha_ingreso')))}}" placeholder="Y-m-d">
+                <input type="date" name="fecha_ingreso" class="form-control" value="{{old('fecha_ingreso')}}" placeholder="Y-m-d">
             </div>
             <div class="form-group">
                 <label for="id_profesion">Profesion</label>
@@ -166,7 +166,7 @@
             </div>
             <div class="form-group">
                 <label for="fecha_actualizacion">Fecha de Actualizacion</label>
-                <input type="date" name="fecha_actualizacion" class="form-control" value="{{date('Y-m-d', strtotime(old('fecha_actualizacion')))}}" placeholder="Y-m-d">
+                <input type="date" name="fecha_actualizacion" class="form-control" value="{{old('fecha_actualizacion')}}" placeholder="Y-m-d">
             </div>
             <!-- FOto -->
 

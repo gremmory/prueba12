@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label for="Fecha_Inicio">Fecha de Inicio</label>
                 <input type="date" name="Fecha_Inicio" class="form-control" value="{{old('Fecha_Inicio')}}" placeholder="Fecha ... ">
-            </div>
+            </div> 
             <div class="form-group">
                 <label for="Cooperador">Cooperador</label>
                 <input type="text" name="Cooperador" class="form-control" value="{{old('Cooperador')}}" placeholder="Cooperador ... ">
