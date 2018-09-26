@@ -40,101 +40,118 @@ class Carga_EstablecimientoController extends Controller
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
 		$ruta  =  storage_path('archivos') ."/". $nombre_original;
 
-		if($r1){
-       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
-       	    if(!empty($data) && $data->count()){
-       	    	$ct = 2;
-       	    	$fila_archivo = "";
-       	    	$falta_datos = "";
+		try {
+			if($r1){
+	       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
+	       	    if(!empty($data) && $data->count()){
+	       	    	$ct = 2;
+	       	    	$fila_archivo = "";
+	       	    	$falta_datos = "";
 
-       	    	$detalle_equipo_todo = Detalle_Equipos::all();
-       	    	$marcas_todo = Marcas::all();
+	       	    	$detalle_equipo_todo = Detalle_Equipos::all();
+	       	    	$marcas_todo = Marcas::all();
 
-       	    	$fases_todo = Fases::all();
-       	    	$tipo_equipos_todo = Dispositivos::all();
-       	    	foreach ($data as $key => $fila) {
-       	    		$buscar_establecimiento = Establecimientos::where("cod_establecimiento", $fila->cod_establecimiento)->first();
+	       	    	$fases_todo = Fases::all();
+	       	    	$tipo_equipos_todo = Dispositivos::all();
+	       	    	foreach ($data as $key => $fila) {
+	       	    		$buscar_establecimiento = Establecimientos::where("cod_establecimiento", $fila->cod_establecimiento)->first();
 
-	       	    	$fases = $fases_todo->where("Nombre", $fila->fase)->first();
-	       	    	$tipo_equipos = $tipo_equipos_todo->where("Desc_tipoequipo", $fila->tipo_equipo)->first();
+		       	    	$fases = $fases_todo->where("Nombre", $fila->fase)->first();
+		       	    	$tipo_equipos = $tipo_equipos_todo->where("Desc_tipoequipo", $fila->tipo_equipo)->first();
 
-	       	    		if($buscar_establecimiento && $fases && $tipo_equipos){//existe establecimiento
-	       	    			$detalle_equipo = $detalle_equipo_todo
-	       	    					->where("cod_establecimiento", $fila->cod_establecimiento)
-	       	    					->where("tipo_equipo", $tipo_equipos['tipo_equipo'])
-	       	    					->where("cod_equipo", $fila->codigo_equipo)->first();
+		       	    		if($buscar_establecimiento && $fases && $tipo_equipos){//existe establecimiento
+		       	    			$detalle_equipo = $detalle_equipo_todo
+		       	    					->where("cod_establecimiento", $fila->cod_establecimiento)
+		       	    					->where("tipo_equipo", $tipo_equipos['tipo_equipo'])
+		       	    					->where("cod_equipo", $fila->codigo_equipo)->first();
 
 
-	       	    			if(empty($detalle_equipo)){
-	       	    				//$marcas = Marcas::where("Desc_Marca", $fila->marca)->first();
-	       	    				$marcas = $marcas_todo->where("Desc_Marca", $fila->marca)->first();
-	       	    				Detalle_Equipos::create([
-		       	    				//$query = new Detalle_Equipos;
-		       	    				'cod_establecimiento' => $fila->cod_establecimiento,
-		       	    				'cod_equipo' => $fila->codigo_equipo,
-		       	    				
-		       	    				'tipo_equipo' => $tipo_equipos['tipo_equipo'],
+		       	    			if(empty($detalle_equipo)){
+		       	    				//$marcas = Marcas::where("Desc_Marca", $fila->marca)->first();
+		       	    				$marcas = $marcas_todo->where("Desc_Marca", $fila->marca)->first();
+		       	    				Detalle_Equipos::create([
+			       	    				//$query = new Detalle_Equipos;
+			       	    				'cod_establecimiento' => $fila->cod_establecimiento,
+			       	    				'cod_equipo' => $fila->codigo_equipo,
+			       	    				
+			       	    				'tipo_equipo' => $tipo_equipos['tipo_equipo'],
 
-		       	    				'desc_equipo' => $fila->desc_equipo,
-		       	    				'id_marca' => ($marcas)? $marcas['Id_Marca'] : null,
-		       	    				'series' => $fila->series,
-		       	    				'cantidad' =>$fila->cantidad,
-		       	    				'Observaciones' => $fila->observaciones,
-		       	    				'Fases_Id_Fase' => $fases->Id_Fase,
-		       	    				'tipo' => $fila->tipo
+			       	    				'desc_equipo' => $fila->desc_equipo,
+			       	    				'id_marca' => ($marcas)? $marcas['Id_Marca'] : null,
+			       	    				'series' => $fila->series,
+			       	    				'cantidad' =>$fila->cantidad,
+			       	    				'Observaciones' => $fila->observaciones,
+			       	    				'Fases_Id_Fase' => $fases->Id_Fase,
+			       	    				'tipo' => $fila->tipo
 
-	       	    				]);
-	       	    			}
-	       	    			else{
-	       	    				$fila_archivo = $fila_archivo . $ct . ", ";
-	       	    			}
-	       	    		}
-	       	    		else{
-	       	    			$falta_datos = $falta_datos . $ct . ", ";
-	       	    		}
-			        /*
-			        }
-			        else{
-			        	$falta_datos = $falta_datos . $ct . ", ";
-			        }
-			        */
-			        $ct++;
-       	    	}
-            }
-            //return "";
-            Storage::disk('archivos')->delete($nombre_original);
-            if($request->ajax()){
-            	if($fila_archivo == "" && $falta_datos == ""){
-	            	return response()->json([
-	            		'success' =>'Se subio el archivo correctamente',
-	            		'medium' =>''
-	            	]);
+		       	    				]);
+		       	    			}
+		       	    			else{
+		       	    				$fila_archivo = $fila_archivo . $ct . ", ";
+		       	    			}
+		       	    		}
+		       	    		else{
+		       	    			$falta_datos = $falta_datos . $ct . ", ";
+		       	    		}
+				        /*
+				        }
+				        else{
+				        	$falta_datos = $falta_datos . $ct . ", ";
+				        }
+				        */
+				        $ct++;
+	       	    	}
+	            }
+	            //return "";
+	            Storage::disk('archivos')->delete($nombre_original);
+	            if($request->ajax()){
+	            	if($fila_archivo == "" && $falta_datos == ""){
+		            	return response()->json([
+		            		'success' =>'Se subio el archivo correctamente',
+		            		'medium' =>''
+		            	]);
+		            }
+		            else{
+		            	$resto = ($falta_datos == "") ? "" : 'Se cargo parte del archivo. Se encontraron errores o falta de información en las siguientes filas: ' . $falta_datos;
+		            	$restoB = ($fila_archivo == "") ? "" : " Y se encontraron datos repetidos en las filas: " . $fila_archivo;
+
+
+		            	return response()->json([
+		            		'success' =>'',
+		            		'medium' => $resto . $restoB
+		            	]);
+		            }
+	            }
+	            if($fila_archivo == "" && $falta_datos == ""){
+	            	return back()->with('success', 'Se subio el archivo correctamente');
 	            }
 	            else{
 	            	$resto = ($falta_datos == "") ? "" : 'Se cargo parte del archivo. Se encontraron errores o falta de información en las siguientes filas: ' . $falta_datos;
-	            	$restoB = ($fila_archivo == "") ? "" : " Y se encontraron datos repetidos en las filas: " . $fila_archivo;
+		           	$restoB = ($fila_archivo == "") ? "" : " Y se encontraron datos repetidos en las filas: " . $fila_archivo;
 
-
-	            	return response()->json([
-	            		'success' =>'',
-	            		'medium' => $resto . $restoB
-	            	]);
+	            	return back()->with('medium', $resto . $restoB);
 	            }
+	       	}
+	       	else
+	       	{
+	       		return back()->with('fail', 'Error al subir el archivo');
+	       	}
+	    }catch ( \Illuminate\Database\QueryException $e) {
+		    if($request->ajax()){
+				return response()->json([
+					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+				]);
             }
-            if($fila_archivo == "" && $falta_datos == ""){
-            	return back()->with('success', 'Se subio el archivo correctamente');
+       		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
+		}
+		catch (PDOException $e) {
+            if($request->ajax()){
+				return response()->json([
+					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+				]);
             }
-            else{
-            	$resto = ($falta_datos == "") ? "" : 'Se cargo parte del archivo. Se encontraron errores o falta de información en las siguientes filas: ' . $falta_datos;
-	           	$restoB = ($fila_archivo == "") ? "" : " Y se encontraron datos repetidos en las filas: " . $fila_archivo;
-
-            	return back()->with('medium', $resto . $restoB);
-            }
-       	}
-       	else
-       	{
-       		return back()->with('fail', 'Error al subir el archivo');
-       	}
+       		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
+        }
     }
 
 
@@ -149,149 +166,140 @@ class Carga_EstablecimientoController extends Controller
 		}
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
 		$ruta  = storage_path('archivos') ."/". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
-		if($r1){
-       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
-       	    if(!empty($data) && $data->count()){
-       	    	$ct = 2;
-       	    	$fila_archivo = "";
-       	    	$repetidos = "";
-       	    	//set_time_limit(0);
-       	    	$municipios_todos = Municipios::all();
-       	    	$departamentos_todos = Departamentos::all();
-       	    	$niveles_todos = Niveles::all();
-       	    	foreach ($data as $key => $fila) {
-       	    		$buscar_establecimiento=DB::table('establecimientos')
-       	    								->where("cod_establecimiento", $fila->cod_establecimiento)->first();
-       	    		//$buscar_establecimiento = Establecimientos::where("cod_establecimiento", $fila->cod_establecimiento)->first();
-			        if($fila->cod_establecimiento){
-	       	    		if($buscar_establecimiento == null){
-	       	    			//$departamentos = DB::table("departamentos")->where("Desc_Deptos", $fila->departamento)->first();
-		       	    		//$departamentos = Departamentos::where("Desc_Deptos", $fila->departamento)->first();
-		       	    		
-		       	    		//$niveles = DB::table("niveles")->where("desc_nivel", $fila->nivel)->first();
-		       	    		$niveles = $niveles_todos->where("desc_nivel", $fila->nivel)->first();
-		       	    		//$niveles = Niveles::where("desc_nivel", $fila->nivel)->first();
-		       	    		$departamentos = $departamentos_todos->where("Desc_Deptos", $fila->departamento)->first();
-	       	    			if($departamentos){ // && $ax == 0
-	       	    				//$municipios = DB::table("municipios")->where("NOM_MUPIO", $fila->municipio)->first();
-	       	    				//$municipios = Municipios::where("NOM_MUPIO", $fila->municipio)->first();
+		
+		try {
+			if($r1){
+	       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
+	       	    if(!empty($data) && $data->count()){
+	       	    	$ct = 2;
+	       	    	$fila_archivo = "";
+	       	    	$repetidos = "";
+	       	    	//set_time_limit(0);
+	       	    	$municipios_todos = Municipios::all();
+	       	    	$departamentos_todos = Departamentos::all();
+	       	    	$niveles_todos = Niveles::all();
+	       	    	foreach ($data as $key => $fila) {
+	       	    		$buscar_establecimiento=DB::table('establecimientos')
+	       	    								->where("cod_establecimiento", $fila->cod_establecimiento)->first();
+				        if($fila->cod_establecimiento){
+		       	    		if($buscar_establecimiento == null){
+		       	    			
+			       	    		$niveles = $niveles_todos->where("desc_nivel", $fila->nivel)->first();
+			       	    		//$niveles = Niveles::where("desc_nivel", $fila->nivel)->first();
+			       	    		$departamentos = $departamentos_todos->where("Desc_Deptos", $fila->departamento)->first();
+		       	    			if($departamentos){ // && $ax == 0
+		       	    				$municipios = $municipios_todos->where("COD_DEPTO", $departamentos['cod_Depto'])->where("NOM_MUPIO", $fila->municipio)->first();
+		       	    				if($municipios){
+		       	    					//$query = new Establecimientos;
+		       	    					Establecimientos::create([
+		       	    						'cod_depto' => $departamentos['cod_Depto'],
+									        'cod_mupio' => $municipios['COD_MUPIO'],
+									        'cod_nivel' => ($niveles)? $niveles['cod_nivel'] : null,
 
-	       	    				$municipios = $municipios_todos->where("COD_DEPTO", $departamentos['cod_Depto'])->where("NOM_MUPIO", $fila->municipio)->first();
-	       	    				if($municipios){
-	       	    					//$query = new Establecimientos;
-	       	    					Establecimientos::create([
-	       	    						'cod_depto' => $departamentos['cod_Depto'],
-								        'cod_mupio' => $municipios['COD_MUPIO'],
-								        'cod_nivel' => ($niveles)? $niveles['cod_nivel'] : null,
-
-								        'cod_establecimiento' => (string)$fila->cod_establecimiento,
-				       	    			'ESTABLECIMIENTO' => $fila->establecimiento,
-								        'DIRECCION' => $fila->direccion,
-								        'TELEFONO' => $fila->telefono,
-								        'SECTOR' => $fila->sector,
-								        'AREA' => $fila->area,
-								        'JORNADA' =>  $fila->jornada,//(count($jornada) !=> 0)? $jornada->id_jornada : "",
-								        'DIRECTOR' => $fila->director,
-								        'ALUMNOS' => intval($fila->alumnos),
-								        'ALUMNAS' => intval($fila->alumnas),
-								        'TOTAL' => intval($fila->alumnas) + intval($fila->alumnos),
-								        'MAESTROS' => intval($fila->docentes),
-								        'modalidad' => $fila->modalidad,
-								        'opf' => (strtolower($fila->opf) == "si")? 1 : 0,
-								        'cuenta_carta' => (strtolower($fila->cuenta_carta) == "si")? 1 : 0,
-								        'latitud' => $fila->latitud,
-								        'longitud' => $fila->longitud,
-								        'certificacion' => (strtolower($fila->certificacion) == "si")? 1 : 0,
-								        'acta_anuencia' => (strtolower($fila->acta_anuencia) == "si")? 1 : 0,
-								        'electricidad' => (strtolower($fila->electricidad) == "si")? 1 : 0,
-								        'seguridad' => (strtolower($fila->seguridad) == "si")? 1 : 0,
-								        'status' => $fila->status,
-								        'observaciones' => $fila->observaciones,
-								        'correo' => $fila->correo
-	       	    					]);
-	       	    					/*
-		       	    				$query->cod_depto = $departamentos->cod_Depto;
-							        $query->cod_mupio = $municipios->COD_MUPIO;
-							        $query->cod_nivel = ($niveles)? $niveles->cod_nivel : null;
-
-							        $query->cod_establecimiento = (string)$fila->cod_establecimiento;
-			       	    			$query->ESTABLECIMIENTO = $fila->establecimiento;
-							        $query->DIRECCION = $fila->direccion;
-							        $query->TELEFONO = $fila->telefono;
-							        $query->SECTOR = $fila->sector;
-							        $query->AREA = $fila->area;
-							        $query->JORNADA =  $fila->jornada;//(count($jornada) != 0)? $jornada->id_jornada : "";
-							        $query->DIRECTOR = $fila->director;
-							        $query->ALUMNOS = intval($fila->alumnos);
-							        $query->ALUMNAS = intval($fila->alumnas);
-							        $query->TOTAL = intval($fila->alumnas) + intval($fila->alumnos);
-							        $query->MAESTROS = intval($fila->docentes);
-							        $query->modalidad = $fila->modalidad;
-							        $query->opf = (strtolower($fila->opf) == "si")? 1 : 0;
-							        $query->cuenta_carta = (strtolower($fila->cuenta_carta) == "si")? 1 : 0;
-							        $query->latitud = $fila->latitud;
-							        $query->longitud = $fila->longitud;
-							        $query->certificacion = (strtolower($fila->certificacion) == "si")? 1 : 0;
-							        $query->acta_anuencia = (strtolower($fila->acta_anuencia) == "si")? 1 : 0;
-							        $query->electricidad = (strtolower($fila->electricidad) == "si")? 1 : 0;
-							        $query->seguridad = (strtolower($fila->seguridad) == "si")? 1 : 0;
-							        $query->status = $fila->status;
-							        $query->observaciones = $fila->observaciones;
-							        $query->correo = $fila->correo;
-
-							        $query->save();
-							        */
-	       	    				}
-	       	    				else{
-	       	    					$fila_archivo = $fila_archivo . $ct . ", ";
-	       	    				}
-	       	    			}
-	       	    			else {
-	       	    				//echo "no entro ---> <br>";
-	       	    				$fila_archivo = $fila_archivo . $ct . ", ";
-	       	    			}
-	       	    			//echo "<br>" . $ct; 
-	       	    		}
-	       	    		else{
-	       	    			$repetidos = $repetidos . $ct . ", ";
-	       	    		}
-			        }
-			        $ct++;
-       	    	}
-            }
-            //Storage::delete("archivos" . $nombre_original);
-            Storage::disk('archivos')->delete($nombre_original);
-
-            if($request->ajax()){
-            	if($fila_archivo == "" && $repetidos == ""){
-	            	return response()->json([
-	            		'success' =>'Se subio el archivo correctamente',
-	            		'medium' =>''
-	            	]);
+									        'cod_establecimiento' => (string)$fila->cod_establecimiento,
+					       	    			'ESTABLECIMIENTO' => $fila->establecimiento,
+									        'DIRECCION' => $fila->direccion,
+									        'TELEFONO' => $fila->telefono,
+									        'SECTOR' => $fila->sector,
+									        'AREA' => $fila->area,
+									        'JORNADA' =>  $fila->jornada,//(count($jornada) !=> 0)? $jornada->id_jornada : "",
+									        'DIRECTOR' => $fila->director,
+									        'ALUMNOS' => intval($fila->alumnos),
+									        'ALUMNAS' => intval($fila->alumnas),
+									        'TOTAL' => intval($fila->alumnas) + intval($fila->alumnos),
+									        'MAESTROS' => intval($fila->docentes),
+									        'modalidad' => $fila->modalidad,
+									        'opf' => (strtolower($fila->opf) == "si")? 1 : 0,
+									        'cuenta_carta' => (strtolower($fila->cuenta_carta) == "si")? 1 : 0,
+									        'latitud' => $fila->latitud,
+									        'longitud' => $fila->longitud,
+									        'certificacion' => (strtolower($fila->certificacion) == "si")? 1 : 0,
+									        'acta_anuencia' => (strtolower($fila->acta_anuencia) == "si")? 1 : 0,
+									        'electricidad' => (strtolower($fila->electricidad) == "si")? 1 : 0,
+									        'seguridad' => (strtolower($fila->seguridad) == "si")? 1 : 0,
+									        'status' => $fila->status,
+									        'observaciones' => $fila->observaciones,
+									        'correo' => $fila->correo
+		       	    					]);
+		       	    				}
+		       	    				else{
+		       	    					$fila_archivo = $fila_archivo . $ct . ", ";
+		       	    				}
+		       	    			}
+		       	    			else {
+		       	    				$fila_archivo = $fila_archivo . $ct . ", ";
+		       	    			}
+		       	    		}
+		       	    		else{
+		       	    			$repetidos = $repetidos . $ct . ", ";
+		       	    		}
+				        }
+				        $ct++;
+	       	    	}
+	            }
+	            //Storage::delete("archivos" . $nombre_original);
+	            Storage::disk('archivos')->delete($nombre_original);
+	            if($request->ajax()){
+	            	if($fila_archivo == "" && $repetidos == ""){
+		            	return response()->json([
+		            		'success' =>'Se subio el archivo correctamente',
+		            		'medium' =>''
+		            	]);
+		            }
+		            else{
+		            	return response()->json([
+		            		'success' =>'',
+		            		'medium' => (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos)
+		            	]);
+		            }
+	            }
+	            if($fila_archivo == "" && $repetidos == ""){
+	            	return back()->with('success', 'Se subio el archivo correctamente');
 	            }
 	            else{
-	            	return response()->json([
-	            		'success' =>'',
-	            		'medium' => (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos)
-	            	]);
+	            	return back()->with('medium', (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos) );
 	            }
-            }
-            if($fila_archivo == "" && $repetidos == ""){
-            	return back()->with('success', 'Se subio el archivo correctamente');
-            }
-            else{
-            	return back()->with('medium', (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos) );
-            }
-       	}
-       	else
-       	{
-       		if($request->ajax()){
+	       	}
+	       	else
+	       	{
+	       		if($request->ajax()){
+					return response()->json([
+						'fal' =>'Error al subir el archivo'
+					]);
+	            }
+
+	       		return back()->with('fail', 'Error al subir el archivo');
+	       	}
+		} catch ( \Illuminate\Database\QueryException $e) {
+		    if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo'
+					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
 				]);
             }
-
-       		return back()->with('fail', 'Error al subir el archivo');
-       	}
+       		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
+		}
+		catch (PDOException $e) {
+            if($request->ajax()){
+				return response()->json([
+					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+				]);
+            }
+       		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+//$departamentos = DB::table("departamentos")->where("Desc_Deptos", $fila->departamento)->first();
+			       	    		//$departamentos = Departamentos::where("Desc_Deptos", $fila->departamento)->first();
+			       	    		
+			       	    		//$niveles = DB::table("niveles")->where("desc_nivel", $fila->nivel)->first();
