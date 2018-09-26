@@ -137,6 +137,7 @@ class Carga_EstablecimientoController extends Controller
 	       		return back()->with('fail', 'Error al subir el archivo');
 	       	}
 	    }catch ( \Illuminate\Database\QueryException $e) {
+	    	Storage::disk('archivos')->delete($nombre_original);
 		    if($request->ajax()){
 				return response()->json([
 					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
@@ -145,6 +146,7 @@ class Carga_EstablecimientoController extends Controller
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
 		}
 		catch (PDOException $e) {
+			Storage::disk('archivos')->delete($nombre_original);
             if($request->ajax()){
 				return response()->json([
 					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
@@ -271,6 +273,7 @@ class Carga_EstablecimientoController extends Controller
 	       		return back()->with('fail', 'Error al subir el archivo');
 	       	}
 		} catch ( \Illuminate\Database\QueryException $e) {
+			Storage::disk('archivos')->delete($nombre_original);
 		    if($request->ajax()){
 				return response()->json([
 					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
@@ -279,6 +282,7 @@ class Carga_EstablecimientoController extends Controller
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
 		}
 		catch (PDOException $e) {
+			Storage::disk('archivos')->delete($nombre_original);
             if($request->ajax()){
 				return response()->json([
 					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
