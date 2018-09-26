@@ -228,12 +228,6 @@ class Carga_EstablecimientoController extends Controller
 		       	    			$repetidos = $repetidos . $ct . ", ";
 		       	    		}
 				        }
-				        else{
-				        	if($request->ajax()){
-								return response()->json([ 'fal' =>'No existe columna cod_establecimiento' ]);
-				            }
-				       		return back()->with('fail', 'No existe columna cod_establecimiento');
-				        }
 				        $ct++;
 	       	    	}
 	            }
