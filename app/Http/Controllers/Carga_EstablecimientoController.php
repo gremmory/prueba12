@@ -272,7 +272,7 @@ class Carga_EstablecimientoController extends Controller
 	            else{
 	            	return response()->json([
 	            		'success' =>'',
-	            		'medium' => 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas:' . $fila_archivo . ". Y se encontraron datos repetidos en las filas: " . $repetidos
+	            		'medium' => (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos)
 	            	]);
 	            }
             }
@@ -280,7 +280,7 @@ class Carga_EstablecimientoController extends Controller
             	return back()->with('success', 'Se subio el archivo correctamente');
             }
             else{
-            	return back()->with('medium', 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas:' . $fila_archivo . ". Y se encontraron datos repetidos en las filas: " . $repetidos);
+            	return back()->with('medium', (($fila_archivo == "")? " " : 'Se cargo parte del archivo. Se encontraron errores en las siguientes filas: ') . $fila_archivo . (($repetidos == "")? " " : ". Y se encontraron datos repetidos en las filas: " . $repetidos) );
             }
        	}
        	else

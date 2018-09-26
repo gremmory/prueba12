@@ -198,7 +198,7 @@ $('#cod_fase_pdf').change(function(event){
 
 
 $(document).ready(function(){
-   $("#enlaceajax").click(function(evento){
+   $("#casasola").submit(function(evento){
       evento.preventDefault();
       var formData = new FormData();
       formData.append('_token',$('input[name="_token"]').val());//$('meta[name="csrf-token"]').attr('content'));
@@ -210,8 +210,6 @@ $(document).ready(function(){
             cache: false,
             contentType: false,
             processData: false,
-            //necesario para subir archivos via ajax
-            //mientras enviamos el archivo
             /*beforeSend: function(){
               alert( "second success a" );               
             },*/
@@ -242,7 +240,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-   $("#enlaceajax2").click(function(evento){
+   $("#casasola2").submit(function(evento){ //$("#enlaceajax2").click(function(evento){
       evento.preventDefault();
       var formData = new FormData();
       formData.append('_token',$('input[name="_token"]').val());//$('meta[name="csrf-token"]').attr('content'));
