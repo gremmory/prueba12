@@ -161,30 +161,35 @@ class Carga_EstablecimientoController extends Controller
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
 		$ruta  = storage_path('archivos') ."/". $nombre_original; // storage_path('archivos') ."\\". $nombre_original;
 		
-		try {
+    	$fila_archivo = "";
+    	$repetidos = "";
+		//try {
 			if($r1){
 	       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
 	       	    if(!empty($data) && $data->count()){
 	       	    	$ct = 2;
-	       	    	$fila_archivo = "";
-	       	    	$repetidos = "";
 	       	    	set_time_limit(0);
 	       	    	$municipios_todos = Municipios::all();
 	       	    	$departamentos_todos = Departamentos::all();
 	       	    	$niveles_todos = Niveles::all();
 	       	    	foreach ($data as $key => $fila) {
-	       	    		$buscar_establecimiento=DB::table('establecimientos')
-	       	    								->where("cod_establecimiento", $fila->cod_establecimiento)->first();
+	       	    		$buscar_establecimiento=DB::table('establecimientos')->where("cod_establecimiento", $fila->cod_establecimiento)->first();
 				        if($fila->cod_establecimiento){
 		       	    		if($buscar_establecimiento == null){
-		       	    			
+		       	    			//$ni_to = clone $niveles_todos;
 			       	    		$niveles = $niveles_todos->where("desc_nivel", $fila->nivel)->first();
 			       	    		//$niveles = Niveles::where("desc_nivel", $fila->nivel)->first();
+
+			       	    		//$dpt_to = clone $departamentos_todos;
 			       	    		$departamentos = $departamentos_todos->where("Desc_Deptos", $fila->departamento)->first();
 		       	    			if($departamentos){ // && $ax == 0
-		       	    				$municipios = $municipios_todos->where("COD_DEPTO", $departamentos['cod_Depto'])->where("NOM_MUPIO", $fila->municipio)->first();
+
+		       	    				//$mun_to = clone $municipios_todos;
+		       	    				$municipios = $municipios_todos->where("COD_DEPTO", $departamentos['cod_Depto'])
+		       	    								->where("NOM_MUPIO", $fila->municipio)->first();
 		       	    				if($municipios){
-		       	    					//$query = new Establecimientos;
+		       	    					$fila_archivo = $fila_archivo ." " . $ct . ",";
+		       	    					
 		       	    					Establecimientos::create([
 		       	    						'cod_depto' => $departamentos['cod_Depto'],
 									        'cod_mupio' => $municipios['COD_MUPIO'],
@@ -193,10 +198,10 @@ class Carga_EstablecimientoController extends Controller
 									        'cod_establecimiento' => (string)$fila->cod_establecimiento,
 					       	    			'ESTABLECIMIENTO' => $fila->establecimiento,
 									        'DIRECCION' => $fila->direccion,
-									        'TELEFONO' => $fila->telefono,
+									        'TELEFONO' => (strlen($fila->telefono) < 50) ? $fila->telefono : "",
 									        'SECTOR' => $fila->sector,
 									        'AREA' => $fila->area,
-									        'JORNADA' =>  $fila->jornada,//(count($jornada) !=> 0)? $jornada->id_jornada : "",
+									        'JORNADA' =>  $fila->jornada,
 									        'DIRECTOR' => $fila->director,
 									        'ALUMNOS' => intval($fila->alumnos),
 									        'ALUMNAS' => intval($fila->alumnas),
@@ -215,6 +220,7 @@ class Carga_EstablecimientoController extends Controller
 									        'observaciones' => $fila->observaciones,
 									        'correo' => $fila->correo
 		       	    					]);
+
 		       	    				}
 		       	    				else{
 		       	    					$fila_archivo = $fila_archivo . $ct . ", ";
@@ -235,10 +241,7 @@ class Carga_EstablecimientoController extends Controller
 	            Storage::disk('archivos')->delete($nombre_original);
 	            if($request->ajax()){
 	            	if($fila_archivo == "" && $repetidos == ""){
-		            	return response()->json([
-		            		'success' =>'Se subio el archivo correctamente',
-		            		'medium' =>''
-		            	]);
+		            	return response()->json([ 'success' =>'Se subio el archivo correctamente', 'medium' =>'' ]);
 		            }
 		            else{
 		            	return response()->json([
@@ -247,6 +250,7 @@ class Carga_EstablecimientoController extends Controller
 		            	]);
 		            }
 	            }
+
 	            if($fila_archivo == "" && $repetidos == ""){
 	            	return back()->with('success', 'Se subio el archivo correctamente');
 	            }
@@ -257,14 +261,30 @@ class Carga_EstablecimientoController extends Controller
 	       	else
 	       	{
 	       		if($request->ajax()){
-					return response()->json([
-						'fal' =>'Error al subir el archivo'
-					]);
+					return response()->json([ 'fail' =>'Error al subir el archivo' ]);
 	            }
-
 	       		return back()->with('fail', 'Error al subir el archivo');
 	       	}
-		} catch ( \Illuminate\Database\QueryException $e) {
+		//} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+		catch ( \Illuminate\Database\QueryException $e) {
 			Storage::disk('archivos')->delete($nombre_original);
 		    if($request->ajax()){
 				return response()->json([
@@ -277,11 +297,13 @@ class Carga_EstablecimientoController extends Controller
 			Storage::disk('archivos')->delete($nombre_original);
             if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+					'fal' =>'Error al subir el archivo - Se encontraron datos no validos 1'
 				]);
             }
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
         }
+
+        */
     }
 }
 

@@ -196,7 +196,7 @@ $('#cod_fase_pdf').change(function(event){
     */
 });
 
-
+/*
 $(document).ready(function(){
    $("#casasola").submit(function(evento){
       evento.preventDefault();
@@ -210,9 +210,7 @@ $(document).ready(function(){
             cache: false,
             contentType: false,
             processData: false,
-            /*beforeSend: function(){
-              alert( "second success a" );               
-            },*/
+
             beforeSend: function(){
 				$(".loader").fadeIn("slow");        
             },
@@ -221,12 +219,12 @@ $(document).ready(function(){
             	if(data.success == ""){
             		$("#medium").fadeIn();
             		$("#medium").append(data.medium);
-            		console.log(data.medium);
+            		//console.log(data.medium);
             	}  
             	else{
             		$("#success").fadeIn();
             		$("#success").append(data.success);
-            		console.log(data.medium);
+            		//console.log(data.medium);
             	}        
             	//console.log(data);
             },
@@ -238,7 +236,7 @@ $(document).ready(function(){
         });
     });
 });
-
+*/
 $(document).ready(function(){
    $("#casasola2").submit(function(evento){ //$("#enlaceajax2").click(function(evento){
       evento.preventDefault();
