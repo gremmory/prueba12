@@ -188,7 +188,7 @@ class Carga_EstablecimientoController extends Controller
 		       	    				$municipios = $municipios_todos->where("COD_DEPTO", $departamentos['cod_Depto'])
 		       	    								->where("NOM_MUPIO", $fila->municipio)->first();
 		       	    				if($municipios){
-		       	    					$fila_archivo = $fila_archivo ." " . $ct . ",";
+		       	    					//$fila_archivo = $fila_archivo ." " . $ct . ",";
 		       	    					
 		       	    					Establecimientos::create([
 		       	    						'cod_depto' => $departamentos['cod_Depto'],
