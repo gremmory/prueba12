@@ -59,46 +59,38 @@ class Carga_EstablecimientoController extends Controller
 		       	    	$fases = $fases_todo->where("Nombre", $fila->fase)->first();
 		       	    	$tipo_equipos = $tipo_equipos_todo->where("Desc_tipoequipo", $fila->tipo_equipo)->first();
 
-		       	    		if($buscar_establecimiento && $fases && $tipo_equipos){//existe establecimiento
-		       	    			$detalle_equipo = $detalle_equipo_todo
-		       	    					->where("cod_establecimiento", $fila->cod_establecimiento)
-		       	    					->where("tipo_equipo", $tipo_equipos['tipo_equipo'])
-		       	    					->where("cod_equipo", $fila->codigo_equipo)->first();
+	       	    		if($buscar_establecimiento && $fases && $tipo_equipos){//existe establecimiento
+	       	    			$detalle_equipo = $detalle_equipo_todo
+	       	    					->where("cod_establecimiento", $fila->cod_establecimiento)
+	       	    					->where("tipo_equipo", $tipo_equipos['tipo_equipo'])
+	       	    					->where("cod_equipo", $fila->codigo_equipo)->first();
 
+	       	    			if(empty($detalle_equipo)){
+	       	    				//$marcas = Marcas::where("Desc_Marca", $fila->marca)->first();
+	       	    				$marcas = $marcas_todo->where("Desc_Marca", $fila->marca)->first();
+	       	    				Detalle_Equipos::create([
+		       	    				//$query = new Detalle_Equipos;
+		       	    				'cod_establecimiento' => $fila->cod_establecimiento,
+		       	    				'cod_equipo' => $fila->codigo_equipo,
+		       	    				
+		       	    				'tipo_equipo' => $tipo_equipos['tipo_equipo'],
 
-		       	    			if(empty($detalle_equipo)){
-		       	    				//$marcas = Marcas::where("Desc_Marca", $fila->marca)->first();
-		       	    				$marcas = $marcas_todo->where("Desc_Marca", $fila->marca)->first();
-		       	    				Detalle_Equipos::create([
-			       	    				//$query = new Detalle_Equipos;
-			       	    				'cod_establecimiento' => $fila->cod_establecimiento,
-			       	    				'cod_equipo' => $fila->codigo_equipo,
-			       	    				
-			       	    				'tipo_equipo' => $tipo_equipos['tipo_equipo'],
-
-			       	    				'desc_equipo' => $fila->desc_equipo,
-			       	    				'id_marca' => ($marcas)? $marcas['Id_Marca'] : null,
-			       	    				'series' => $fila->series,
-			       	    				'cantidad' =>$fila->cantidad,
-			       	    				'Observaciones' => $fila->observaciones,
-			       	    				'Fases_Id_Fase' => $fases->Id_Fase,
-			       	    				'tipo' => $fila->tipo
-
-		       	    				]);
-		       	    			}
-		       	    			else{
-		       	    				$fila_archivo = $fila_archivo . $ct . ", ";
-		       	    			}
-		       	    		}
-		       	    		else{
-		       	    			$falta_datos = $falta_datos . $ct . ", ";
-		       	    		}
-				        /*
-				        }
-				        else{
-				        	$falta_datos = $falta_datos . $ct . ", ";
-				        }
-				        */
+		       	    				'desc_equipo' => $fila->desc_equipo,
+		       	    				'id_marca' => ($marcas)? $marcas['Id_Marca'] : null,
+		       	    				'series' => $fila->series,
+		       	    				'cantidad' =>$fila->cantidad,
+		       	    				'Observaciones' => $fila->observaciones,
+		       	    				'Fases_Id_Fase' => $fases->Id_Fase,
+		       	    				'tipo' => $fila->tipo
+	       	    				]);
+	       	    			}
+	       	    			else{
+	       	    				$fila_archivo = $fila_archivo . $ct . ", ";
+	       	    			}
+	       	    		}
+	       	    		else{
+	       	    			$falta_datos = $falta_datos . $ct . ", ";
+	       	    		}
 				        $ct++;
 	       	    	}
 	            }
@@ -235,6 +227,12 @@ class Carga_EstablecimientoController extends Controller
 		       	    		else{
 		       	    			$repetidos = $repetidos . $ct . ", ";
 		       	    		}
+				        }
+				        else{
+				        	if($request->ajax()){
+								return response()->json([ 'fal' =>'No existe columna cod_establecimiento' ]);
+				            }
+				       		return back()->with('fail', 'No existe columna cod_establecimiento');
 				        }
 				        $ct++;
 	       	    	}
