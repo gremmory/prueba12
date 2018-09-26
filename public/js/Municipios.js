@@ -238,48 +238,8 @@ $(document).ready(function(){
 		        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
 		    }
         });
-      //d$("#cargando").css("display", "inline");
-    	/*var form = $('#casasola');
-    	var url = form.attr('action');
-    	var data = form.serialize();
-
-    	$.post(url, data, function(result){
-    		//$(".loader").fadeIn("slow");
-    	})
-    	.done(function() {
-		    alert( "second success" );
-		 })
-    	.always(function() {
-		    alert( "finished" );
-		    //$(".loader").fadeOut("slow");
-		});*/
-/*
-		$.ajax({
-            url: url,  
-            type: 'POST',
-            data: data,
-            //necesario para subir archivos via ajax
-
-            //mientras enviamos el archivo
-            beforeSend: function(){
-              alert( "second success a" );               
-            },
-            //una vez finalizado correctamente
-            success: function(data){             
-            	alert( "second success c");
-            },
-            //si ha ocurrido un error
-            error: function(data){
-               //alert("ha ocurrido un error") ;
-                alert( "second success d" );
-            }
-        });
-        */
     });
 });
-
-
-
 
 $(document).ready(function(){
    $("#enlaceajax2").click(function(evento){

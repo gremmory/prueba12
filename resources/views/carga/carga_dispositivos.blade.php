@@ -35,10 +35,12 @@
 			{{ session('medium') }}
 		</div> 
 		@endif
-		<div class="loader"></div>
+		
 		<div class="alert alert-success" id="success" hidden></div> 
 		<div class="alert alert-danger" id="fail" hidden></div> 
 		<div class="alert alert-warning" id="medium" hidden></div> 
+
+		<div class="loader"></div>
 
 		{!! Form::open(array('url'=> '/carga/dispositivos/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data', 'id'=>'casasola2')) !!}
 		{{ Form::token() }}

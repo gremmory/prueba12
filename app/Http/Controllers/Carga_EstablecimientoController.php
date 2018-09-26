@@ -38,7 +38,7 @@ class Carga_EstablecimientoController extends Controller
 		$nombre_original= $archivo->getClientOriginalName(); //uniqid() . 
 		$extension=$archivo->getClientOriginalExtension();
 		$r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
-		$ruta  =  storage_path('archivos') ."\\". $nombre_original;
+		$ruta  =  storage_path('archivos') ."/". $nombre_original;
 
 		if($r1){
        	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
