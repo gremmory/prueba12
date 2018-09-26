@@ -168,7 +168,7 @@ class Carga_EstablecimientoController extends Controller
 	       	    	$ct = 2;
 	       	    	$fila_archivo = "";
 	       	    	$repetidos = "";
-	       	    	//set_time_limit(0);
+	       	    	set_time_limit(0);
 	       	    	$municipios_todos = Municipios::all();
 	       	    	$departamentos_todos = Departamentos::all();
 	       	    	$niveles_todos = Niveles::all();
