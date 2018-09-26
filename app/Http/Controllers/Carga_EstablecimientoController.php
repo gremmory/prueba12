@@ -132,7 +132,7 @@ class Carga_EstablecimientoController extends Controller
 	    	Storage::disk('archivos')->delete($nombre_original);
 		    if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+					'fail' =>'Error al subir el archivo - Se encontraron datos no validos'
 				]);
             }
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
@@ -141,12 +141,18 @@ class Carga_EstablecimientoController extends Controller
 			Storage::disk('archivos')->delete($nombre_original);
             if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+					'fail' =>'Error al subir el archivo - Se encontraron datos no validos'
 				]);
             }
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
         }
     }
+
+
+
+
+
+
 
 
     public function establecimientos(Request $request){
@@ -163,12 +169,12 @@ class Carga_EstablecimientoController extends Controller
 		
     	$fila_archivo = "";
     	$repetidos = "";
-		//try {
+		try {
 			if($r1){
 	       	    $data = Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) { })->get();
 	       	    if(!empty($data) && $data->count()){
 	       	    	$ct = 2;
-	       	    	set_time_limit(0);
+	       	    	//set_time_limit(0);
 	       	    	$municipios_todos = Municipios::all();
 	       	    	$departamentos_todos = Departamentos::all();
 	       	    	$niveles_todos = Niveles::all();
@@ -265,7 +271,7 @@ class Carga_EstablecimientoController extends Controller
 	            }
 	       		return back()->with('fail', 'Error al subir el archivo');
 	       	}
-		//} 
+		} 
 
 
 
@@ -283,12 +289,11 @@ class Carga_EstablecimientoController extends Controller
 
 
 
-/*
 		catch ( \Illuminate\Database\QueryException $e) {
 			Storage::disk('archivos')->delete($nombre_original);
 		    if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo - Se encontraron datos no validos'
+					'fail' =>'Error al subir el archivo - Se encontraron datos no validos'
 				]);
             }
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
@@ -297,13 +302,12 @@ class Carga_EstablecimientoController extends Controller
 			Storage::disk('archivos')->delete($nombre_original);
             if($request->ajax()){
 				return response()->json([
-					'fal' =>'Error al subir el archivo - Se encontraron datos no validos 1'
+					'fail' =>'Error al subir el archivo - Se encontraron datos no validos. '
 				]);
             }
        		return back()->with('fail', 'Error al subir el archivo - Se encontraron datos no validos');
         }
 
-        */
     }
 }
 

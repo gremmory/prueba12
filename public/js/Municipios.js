@@ -196,7 +196,7 @@ $('#cod_fase_pdf').change(function(event){
     */
 });
 
-/*
+
 $(document).ready(function(){
    $("#casasola").submit(function(evento){
       evento.preventDefault();
@@ -220,15 +220,19 @@ $(document).ready(function(){
             		$("#medium").fadeIn();
             		$("#medium").append(data.medium);
             		//console.log(data.medium);
-            	}  
-            	else{
+            	} 
+                else if (data.success != "") {
             		$("#success").fadeIn();
             		$("#success").append(data.success);
             		//console.log(data.medium);
             	}        
+                else{
+                    $("#fail").fadeIn();
+                    $("#fail").append(data.fail);
+                }
             	//console.log(data);
             },
-            timeout: 100000,
+            //timeout: 100000,
             error: function(jqXHR, textStatus, errorThrown){
 		    	console.log(JSON.stringify(jqXHR));
 		        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
@@ -236,7 +240,7 @@ $(document).ready(function(){
         });
     });
 });
-*/
+
 $(document).ready(function(){
    $("#casasola2").submit(function(evento){ //$("#enlaceajax2").click(function(evento){
       evento.preventDefault();
@@ -258,15 +262,19 @@ $(document).ready(function(){
             	if(data.success == ""){
             		$("#medium").fadeIn();
             		$("#medium").append(data.medium);
-            		console.log(data.medium);
+            		//console.log(data.medium);
             	}
-            	else{
-            		$("#success").fadeIn();
-            		$("#success").append(data.success);
-            		console.log(data.medium);
-            	}
+                else if (data.success != "") {
+                    $("#success").fadeIn();
+                    $("#success").append(data.success);
+                    //console.log(data.medium);
+                }        
+                else{
+                    $("#fail").fadeIn();
+                    $("#fail").append(data.fail);
+                }
             },
-            timeout: 100000,
+            //timeout: 100000,
             error: function(jqXHR, textStatus, errorThrown){
 		    	console.log(JSON.stringify(jqXHR));
 		        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
