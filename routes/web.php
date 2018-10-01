@@ -20,7 +20,8 @@ Route::get('/', function () {
     return view('layouts/admin');
 })->middleware('auth');;
 
-Route::group(['prefix' => 'admin', 'middleware'=>'App\Http\Middleware\SuperAdminMiddleware'], function(){
+//'prefix' => 'admin', 
+Route::group(['middleware'=>'App\Http\Middleware\SuperAdminMiddleware'], function(){
 
 	Route::resource('nomodel/annos', 'AnnosController');
 	Route::resource('nomodel/cargos', 'CargosController');
