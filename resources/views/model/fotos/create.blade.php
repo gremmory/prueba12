@@ -23,7 +23,7 @@
 				{{ session('fail') }}
 			</div> 
 			@endif
-			@if(Auth::user()->permite_modif)
+			@if(Auth::user()->admin == 1 || Auth::user()->permite_modif == 1)
 			<div>
 				{!! Form::open(array('url'=> '/model/fotos/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data')) !!}
 				{{ Form::token() }}
@@ -49,7 +49,7 @@
                                     <a href="{{ url('/uploads/' . $an->imagen) }}" target="_blank"><img src="{{ asset('uploads/'.$an->imagen) }}" alt="{{$an->imagen}}"></a>
                                     <div class="caption">
                                         <!--<h>{{$an->imagen}}</h>-->
-                                        @if(Auth::user()->permite_modif)
+                                        @if(Auth::user()->admin == 1 || Auth::user()->permite_modif == 1)
                                         <a href="{{URL::action('FotosController@destroy', [$an->imagen, $an->idFotos])}}" ><button class="btn btn-danger"> Eliminar </button></a>
                                         @endif
                                     </div>

@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class= "col-lg-8 col-md-8 col-sm-8 col-xs-12">
 
-			<H3>Listado de Establecimientos @if (Auth::user()->permite_agregar == 1) <a href="establecimientos/create"><button class="btn btn-sucess">Nuevo</button></a> @endif</H3>
+			<H3>Listado de Establecimientos @if (Auth::user()->admin == 1 || Auth::user()->permite_agregar == 1) <a href="establecimientos/create"><button class="btn btn-sucess">Nuevo</button></a> @endif</H3>
 
 			@include('model.establecimientos.search')
 
@@ -80,7 +80,7 @@
 						<td>{{ $an->status}}</td>
 						<td>{{ $an->observaciones }}</td>
 						<td>
-							@if (Auth::user()->permite_modif == 1)
+							@if (Auth::user()->admin == 1 || Auth::user()->permite_modif == 1)
 							<a href="{{ URL::action('EstablecimientosController@edit', $an->cod_establecimiento) }}"><button class="btn btn-info"> Editar </button></a>
 							<a href="" data-target="#modal-delete-{{$an->cod_establecimiento}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar </button></a>
 							@endif

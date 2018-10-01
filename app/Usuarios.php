@@ -16,12 +16,12 @@ class Usuarios extends Model
     	'id_usuario',
     	'Apellidos',
     	'Nombres',
-    	'CorreoE',
-    	'Nomusuario',
-    	'contrasena',
+    	'email',
+    	'password',
     	'permite_ver',
     	'permite_modif',
-    	'permite_agregar',
+        'permite_agregar',
+        'admin',
     ];
 
 

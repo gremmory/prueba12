@@ -7,6 +7,9 @@ use App\User;
 use App\Http\Requests\UsuariosFormRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+//use App\User;
+//use RegistersUsers;
 
 class UsuariosController extends Controller
 {
@@ -26,6 +29,15 @@ class UsuariosController extends Controller
     		;
     		return view('model.usuarios.index', ["usuarios"=>$query_general, "searchText"=>$query]);
     	}
+    }
+
+    public function Insetar (UsuariosFormRequest $request){
+        $usuarios= new User($request->all());
+        $usuarios->password = Hash::make($request['password']);
+        $usuarios->save();
+        return Redirect::to('model/usuarios');
+
+        return Redirect::to('model/proveedores');
     }
 
     public function create (){

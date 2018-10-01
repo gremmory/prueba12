@@ -24,6 +24,17 @@ class UsuariosFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'Apellidos' => 'required|string|max:100', 
+            'Nombres' => 'required|string|max:100', 
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:6|confirmed', 
+            'permite_ver' => 'boolean', 
+            'permite_modif' => 'boolean', 
+            'permite_agregar' => 'boolean', 
+            'admin' => 'boolean',
+        ];
+        /*
+        return [
             'Apellidos' => 'required|max:50',
             'Nombres' => 'required|max:50',
             'CorreoE' => 'required|email|max:50',
@@ -33,5 +44,6 @@ class UsuariosFormRequest extends FormRequest
             'permite_modif' => 'required|boolean',
             'permite_agregar' => 'required|boolean',
         ];
+        */
     }
 }
