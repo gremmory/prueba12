@@ -12,6 +12,10 @@ use App\Http\Requests\EstablecimientosFormRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
+
 class EstablecimientosController extends Controller
 {
 	public function __construct(){
@@ -33,6 +37,9 @@ class EstablecimientosController extends Controller
     }
 
     public function create (){
+        if($this->VerificarAdd()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para agregar'));
+        }
     	$departamentos = departamentos::all();
   		$fases = fases::all();
   		$niveles = niveles::all();
@@ -60,6 +67,10 @@ class EstablecimientosController extends Controller
     }
 
     public function Insetar (EstablecimientosFormRequest $request){
+        if($this->VerificarAdd()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para agregar'));
+        }
+
     	$establecimientos= new Establecimientos($request->all());
         $establecimientos->TOTAL = $establecimientos->ALUMNAS + $establecimientos->ALUMNOS;
 
@@ -72,6 +83,9 @@ class EstablecimientosController extends Controller
     }
 
 	public function edit ($id){
+        if($this->VerificarModi()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para editar'));
+        }
     	return view("model.establecimientos.edit", 
     		[
     			"establecimientos"=>establecimientos::findOrFail($id), 
@@ -82,6 +96,9 @@ class EstablecimientosController extends Controller
     }
 
     public function update (Request $request, $id){
+        if($this->VerificarModi()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para editar'));
+        }
         $validatedData = $request->validate([
             //'cod_establecimiento' => 'required|unique:establecimientos,cod_establecimiento,'.$id .'|max:12',
             'cod_depto' => 'required|min:1',
@@ -152,8 +169,24 @@ class EstablecimientosController extends Controller
     }
 
     public function destroy ($id){
+        if($this->VerificarModi()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para editar'));
+        }
     	$query=establecimientos::findOrFail($id);
     	$query->delete();
     	return Redirect::to('model/establecimientos');//nomodel/annos
+    }
+
+    public function VerificarModi(){
+        if(Auth::user()->admin == 1 || Auth::user()->permite_modif == 1){
+            return false;
+        }
+        return true;
+    }
+    public function VerificarAdd(){
+        if(Auth::user()->admin == 1 || Auth::user()->permite_agregar == 1){
+            return false;
+        }
+        return true;
     }
 }

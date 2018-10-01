@@ -18,42 +18,76 @@
 
             {!! Form::model ($usuarios, ['method'=>'PATCH', 'route' => array('usuarios.update', $usuarios->id_usuario)]) !!}
             {{ Form::token() }}
-             <div class="form-group">
-                <label for="Apellidos">Apellidos</label>
-                <input type="text" name="Apellidos" class="form-control" value="{{$usuarios->Apellidos}}" placeholder="Apellidos ...">
-            </div>
+            <!--  Apellido  -->
             <div class="form-group">
-                <label for="Nombres">Nombres</label>
-                <input type="text" name="Nombres" class="form-control" value="{{$usuarios->Nombres}}" placeholder="Nombres ...">
-            </div>
-            <div class="form-group">
-                <label for="CorreoE">Email</label>
-                <input type="email" name="CorreoE" class="form-control" value="{{$usuarios->CorreoE}}" placeholder="Correo ...">
-            </div>
-            <!--
-            <div class="form-group">
-                <label for="Nomusuario">Usuario</label>
-                <input type="text" name="Nomusuario" class="form-control" value="{{$usuarios->Nomusuario}}" placeholder="Usuario ...">
-            </div>
-        	-->
+                <label for="Apellidos" >{{ __('Apellidos') }}</label>
+                <input id="Apellidos" type="text" class="form-control{{ $errors->has('Apellidos') ? ' is-invalid' : '' }}" name="Apellidos" value="{{$usuarios->Apellidos}}" required autofocus>
 
-            <div class="form-group">
-                <label for="contrasena">Contrasena</label>
-                <input type="password" name="contrasena" class="form-control" value="{{$usuarios->contrasena}}" placeholder="contrasena ...">
+                @if ($errors->has('Apellidos'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('Apellidos') }}</strong>
+                    </span>
+                @endif
             </div>
 
+            <!--  Nombre  -->
+            <div class="form-group">
+                <label for="Nombres" >{{ __('Nombres') }}</label>
+                <input id="Nombres" type="text" class="form-control{{ $errors->has('Nombres') ? ' is-invalid' : '' }}" name="Nombres" value="{{$usuarios->Nombres}}" required autofocus>
+                @if ($errors->has('Nombres'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('Nombres') }}</strong>
+                    </span>
+                @endif
+            </div>
+
+            <!--    Email   -->
+            <div class="form-group">
+                <label for="email" >{{ __('Dirección electronica') }}</label>
+                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{$usuarios->email}}" readonly="true">
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+            </div>
+
+            <!--    Password    -->
+            <div class="form-group">
+                <label for="password" >{{ __('Password') }}</label>
+                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                @if ($errors->has('password'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="password-confirm" >{{ __('Confirm Password') }}</label>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="admin">Administrador</label>
+                <select name="admin" class="form-control">
+                    <option value="{{$usuarios->admin}}">{{$usuarios->admin == 0 ? 'No' : 'Si'}}</option>
+                    <option value="0" > No </option> 
+                    <option value="1" > Si </option> 
+                </select>
+            </div>
             <div class="form-group">
                 <label for="permite_ver">Permitir Ver</label>
-                <select name="permite_ver" class="form-control"  >
-                    <option value="{{$usuarios->permite_ver}}"> {{$usuarios->permite_ver == 0 ? 'No' : 'Si'}} </option>
-                    <option value="1" > Si </option> 
+                <select name="permite_ver" class="form-control">
+                    <option value="{{$usuarios->permite_ver}}">{{$usuarios->permite_ver == 0 ? 'No' : 'Si'}}</option>
                     <option value="0" > No </option> 
+                    <option value="1" > Si </option> 
                 </select>
             </div>
             <div class="form-group">
                 <label for="permite_modif">Permite Modificar</label>
                 <select name="permite_modif" class="form-control">
-                    <option value="{{$usuarios->permite_modif}}"> {{$usuarios->permite_modif == 0 ? 'No' : 'Si'}} </option>
+                    <option value="{{$usuarios->permite_modif}}">{{$usuarios->permite_modif == 0 ? 'No' : 'Si'}}</option>
                     <option value="0" > No </option> 
                     <option value="1" > Si </option> 
                 </select>
@@ -61,11 +95,13 @@
             <div class="form-group">
                 <label for="permite_agregar">Permite Agregar</label>
                 <select name="permite_agregar" class="form-control">
-                    <option value="{{$usuarios->permite_agregar}}"> {{$usuarios->permite_agregar == 0 ? 'No' : 'Si'}} </option>
+                    <option value="{{$usuarios->permite_agregar}}">{{$usuarios->permite_agregar == 0 ? 'No' : 'Si'}}</option>
                     <option value="0" > No </option> 
                     <option value="1" > Si </option> 
                 </select>
             </div>
+
+
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Guardar</button>
                 <button class="btn btn-danger" type="reset">Cancelar</button>

@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';//home
 
     /**
      * Create a new controller instance.
@@ -49,9 +49,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'Apellidos' => 'required|string|max:100', 
+            'Nombres' => 'required|string|max:100', 
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:6|confirmed', 
+            'permite_ver' => 'boolean', 
+            'permite_modif' => 'boolean', 
+            'permite_agregar' => 'boolean', 
+            'admin' => 'boolean',
         ]);
     }
 
@@ -64,9 +69,30 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'Apellidos' => $data['Apellidos'], 
+            'Nombres' => $data['Nombres'], 
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['password']), 
+            'permite_ver' => 1, 
+            'permite_modif' => 0, 
+            'permite_agregar' => 0, 
+            'admin' => 0,
         ]);
     }
+
+    protected function create_admin(array $data)
+    {
+        return User::create([
+            'Apellidos' => $data['Apellidos'], 
+            'Nombres' => $data['Nombres'], 
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']), 
+            'permite_ver' => $data['permite_ver'], 
+            'permite_modif' => $data['permite_modif'], 
+            'permite_agregar' => $data['permite_agregar'], 
+            'admin' => $data['admin'],
+        ]);
+    }
+
+
 }

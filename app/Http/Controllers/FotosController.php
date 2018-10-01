@@ -10,6 +10,9 @@ use App\Requests\FotosFormRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 class FotosController extends Controller
 {
     //
@@ -27,7 +30,9 @@ class FotosController extends Controller
 
 
     public function Insetar(Request $request){
-
+        if($this->VerificarAdd()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para agregar'));
+        }
     	$validatedData = $request->validate([
     		'imagen' => 'required',
     		'imagen.*' => 'mimes:jpeg,jpg,png,gif',
@@ -50,6 +55,9 @@ class FotosController extends Controller
     }
 
     public function destroy($id1, $id2){
+        if($this->VerificarModi()){
+            return new Response(view('unauthorized')->with('role', 'Administrador o permisos para editar'));
+        }
 		if(\File::exists(public_path('uploads/' . $id1))){
 			\File::delete(public_path('uploads/' . $id1));
 			$query=fotos::findOrFail($id2);
@@ -58,5 +66,18 @@ class FotosController extends Controller
 		}else{
 			return back()->with('fail', 'Error al elminar');;
 		}
+    }
+
+    public function VerificarModi(){
+        if(Auth::user()->admin == 1 || Auth::user()->permite_modif == 1){
+            return false;
+        }
+        return true;
+    }
+    public function VerificarAdd(){
+        if(Auth::user()->admin == 1 || Auth::user()->permite_agregar == 1){
+            return false;
+        }
+        return true;
     }
 }

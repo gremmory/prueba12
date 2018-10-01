@@ -3,7 +3,7 @@
 
 	<div class="row">
 		<div class="col-lg-6 col-md-sm-6 col-xs-12">
-			<H3 class="jumbotron">Nuevas Imagenes - Establecimiento: {{$establecimiento->ESTABLECIMIENTO}}</H3>
+			<H3 class="jumbotron">Imagenes - Establecimiento: {{$establecimiento->ESTABLECIMIENTO}}</H3>
 			@if (count ($errors) > 0)
 			<div class="alert alert-danger">
 				<ul>
@@ -23,6 +23,7 @@
 				{{ session('fail') }}
 			</div> 
 			@endif
+			@if(Auth::user()->permite_modif)
 			<div>
 				{!! Form::open(array('url'=> '/model/fotos/store',  'method'=>'POST', 'autocomplete'=>'off', 'files'=>true, 'enctype'=>'multipart/form-data')) !!}
 				{{ Form::token() }}
@@ -31,6 +32,7 @@
 					<button type="submit" class="btn btn-primary" style="margin-top:10px">Cargar Imagenes</button>
 				{!! Form::close() !!}        
 			</div>
+			@endif
 		</div>
 	</div>
 
@@ -47,7 +49,9 @@
                                     <a href="{{ url('/uploads/' . $an->imagen) }}" target="_blank"><img src="{{ asset('uploads/'.$an->imagen) }}" alt="{{$an->imagen}}"></a>
                                     <div class="caption">
                                         <!--<h>{{$an->imagen}}</h>-->
+                                        @if(Auth::user()->permite_modif)
                                         <a href="{{URL::action('FotosController@destroy', [$an->imagen, $an->idFotos])}}" ><button class="btn btn-danger"> Eliminar </button></a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

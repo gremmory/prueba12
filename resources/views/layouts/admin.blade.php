@@ -33,7 +33,7 @@
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>-</b>--</span>
           <!-- logo for regular state and mobile devices -->
@@ -53,21 +53,29 @@
               
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
+                <!--
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <small class="bg-red"->Linea-</small>
-                  <span class="hidden-xs">--</span>
+                  <small class="bg-red"->     </small>
+                  <span class="hidden-xs"></span>
+                </a>
+                -->
+                @guest
+                @else
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->Nombres . " " . Auth::user()->Apellidos }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <!--
-                    <p>
-                      www.incanatoit.com - Desarrollando Software
-                      <small>www.youtube.com/jcarlosad7</small>
-                    </p>
-                  -->
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                   </li>
-                  
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     
@@ -76,6 +84,7 @@
                     </div>
                   </li>
                 </ul>
+                @endguest
               </li>
               
             </ul>
@@ -95,6 +104,8 @@
 
 
 <!-- +++++++++++++++++++++++++++ Inicio ++++++++++++++++++++++++++++++++++++++++ -->
+            
+            @if (Auth::user()->admin == 1)
 
             <li class="treeview">
               <a href="#">
@@ -174,10 +185,20 @@
                 <!--<li><a href=""><i class="fa fa-university"></i> Retiro de Equipos </a></li>-->
               </ul>
             </li>
-
+            @else
             <li class="treeview">
-              <li><a href="{{URL::action('GenerarPDFController@vista')}}"><i class="fa fa-university"></i> Generar PDF </a></li>
+              <a href="#">
+                <i class="fa fa-tasks"></i>
+                <span>Establecimientos</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::action('EstablecimientosController@index')}}"><i class="fa fa-university"></i> Establecimientos </a></li>
+                <!--<li><a href=""><i class="fa fa-university"></i> Retiro de Equipos </a></li>-->
+              </ul>
             </li>
+            
+            @endif
 
 
 

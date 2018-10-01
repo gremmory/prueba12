@@ -18,47 +18,98 @@
 
             {!! Form::open(array('url'=> '/model/usuarios/store',  'method'=>'POST', 'autocomplete'=>'off')) !!}
             {{ Form::token() }}
-            <div class="form-group">
-                <label for="Apellidos">Apellidos</label>
-                <input type="text" name="Apellidos" class="form-control" placeholder="Apellidos ...">
+            <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+
+            <!--  Apellido  -->
+            <div class="form-group row">
+                <label for="Apellidos" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
+
+                <div class="col-md-6">
+                    <input id="Apellidos" type="text" class="form-control{{ $errors->has('Apellidos') ? ' is-invalid' : '' }}" name="Apellidos" value="{{ old('Apellidos') }}" required autofocus>
+
+                    @if ($errors->has('Apellidos'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('Apellidos') }}</strong>
+                        </span>
+                    @endif
+                </div>
             </div>
-            <div class="form-group">
-                <label for="Nombres">Nombres</label>
-                <input type="text" name="Nombres" class="form-control" placeholder="Nombres ...">
+
+            <!--  Nombre  -->
+            <div class="form-group row">
+                <label for="Nombres" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
+                <div class="col-md-6">
+                    <input id="Nombres" type="text" class="form-control{{ $errors->has('Nombres') ? ' is-invalid' : '' }}" name="Nombres" value="{{ old('Nombres') }}" required autofocus>
+                    @if ($errors->has('Nombres'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('Nombres') }}</strong>
+                        </span>
+                    @endif
+                </div>
             </div>
-            <div class="form-group">
-                <label for="CorreoE">Email</label>
-                <input type="email" name="CorreoE" class="form-control" placeholder="Correo ...">
+
+            <!--    Email   -->
+            <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Dirección electronica') }}</label>
+                <div class="col-md-6">
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
+                </div>
             </div>
-            <div class="form-group">
-                <label for="Nomusuario">Usuario</label>
-                <input type="text" name="Nomusuario" class="form-control" placeholder="Usuario ...">
+
+            <!--    Password    -->
+            <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                <div class="col-md-6">
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
+                </div>
             </div>
-            <div class="form-group">
-                <label for="contrasena">Contrasena</label>
-                <input type="password" name="contrasena" class="form-control" placeholder="contrasena ...">
+            <div class="form-group row">
+                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                <div class="col-md-6">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                </div>
             </div>
-            <div class="form-group">
+
+
+            <div class="form-group row">
                 <label for="permite_ver">Permitir Ver</label>
                 <select name="permite_ver" class="form-control">
                     <option value="0" > No </option> 
-    	            <option value="1" > Si </option> 
-    	        </select>
+                    <option value="1" > Si </option> 
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <label for="permite_modif">Permite Modificar</label>
                 <select name="permite_modif" class="form-control">
                     <option value="0" > No </option> 
-    	            <option value="1" > Si </option> 
-    	        </select>
+                    <option value="1" > Si </option> 
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <label for="permite_agregar">Permite Agregar</label>
                 <select name="permite_agregar" class="form-control">
                     <option value="0" > No </option> 
-    	            <option value="1" > Si </option> 
-    	        </select>
+                    <option value="1" > Si </option> 
+                </select>
             </div>
+            <div class="form-group row">
+                <label for="admin">Administrador</label>
+                <select name="admin" class="form-control">
+                    <option value="0" > No </option> 
+                    <option value="1" > Si </option> 
+                </select>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Guardar</button>
                 <button class="btn btn-danger" type="reset">Cancelar</button>

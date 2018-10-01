@@ -20,7 +20,7 @@
 						<th>Apellidos</th>
 						<th>Nombres</th>
 						<th>Correo</th>
-						<th>Usuario</th>
+						<th>Administrador</th>
 						<th>Ver</th>
 						<th>Modificar</th>
 						<th>Agregar</th>
@@ -30,8 +30,8 @@
 					<tr>
 						<td>{{ $an->Apellidos }}</td>
 						<td>{{ $an->Nombres }}</td>
-						<td>{{ $an->CorreoE }}</td>
-						<td>{{ $an->Nomusuario }}</td>
+						<td>{{ $an->email }}</td>
+						<td>{{ ($an->admin == 1) ? 'Si' : 'No' }}</td>
 						<td>{{ ($an->permite_ver == 1) ? 'Si' : 'No' }}</td>
 						<td>{{ ($an->permite_modif == 1) ? 'Si' : 'No' }}</td>
 						<td>{{ ($an->permite_agregar == 1) ? 'Si' : 'No' }}</td>
